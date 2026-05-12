@@ -1,0 +1,40 @@
+from pyspark.sql.functions import upper, col
+
+# ===== Extract =====
+df = spark.read.csv('/Volumes/workspace/ust_db/ust/employee.csv', header=True, inferSchema=True)
+
+display(df)
+
+# ===== Transform =====
+#Step 2
+df = df.withColumn(
+    "salary",
+    when(
+        col("department") == "IT",
+        col("salary") * 1.10
+    ).otherwise(col("salary"))
+)
+
+# Increase IT salary by 10% #Two columns
+df = df.withColumn(
+    "salary",
+    col("salary") * 1.10
+).where(col("department") == "IT")
+
+df = df.withColumn("name", upper(col("name")))
+
+df = df.withColumn("bonus", col("salary") * 0.05)
+
+display(df)
+# Convert names to uppercase
+df = df.withColumn("name", upper(col("name")))
+
+# Add bonus column
+df = df.withColumn("bonus", col("salary") * 0.05)
+
+display(df)
+
+# ===== Load =====
+df.write.mode("overwrite").saveAsTable("employees")
+
+print("Table created successfully")
