@@ -1,0 +1,45 @@
+from pyspark.sql import SparkSession
+
+data = [
+    (1, "Preetti", "IT", 50000),
+    (2, "Rahul", "HR", 40000),
+    (3, "Amit", "Finance", 60000)
+]
+
+columns = ["id", "name", "department", "salary"]
+
+df = spark.createDataFrame(data, columns)
+
+df.show()
+
+
+df.write.format("delta") \
+    .mode("overwrite") \
+    .saveAsTable("employees_delta")
+
+
+
+merge_data = [
+    (1, "Preetti", "IT", 80000),
+    (6, "Anjali", "Marketing", 50000)
+]
+
+merge_df = spark.createDataFrame(merge_data, columns)
+
+delta_table.alias("target").merge(
+    merge_df.alias("source"),
+    "target.id = source.id"
+).whenMatchedUpdate(set={
+    "salary": "source.salary"
+}).whenNotMatchedInsert(values={
+    "id": "source.id",
+    "name": "source.name",
+    "department": "source.department",
+    "salary": "source.salary"
+}).execute()
+
+
+spark.sql("SHOW TABLES").show()
+spark.sql("DESCRIBE DETAIL employees_delta").show()
+spark.sql("DESCRIBE HISTORY employees_delta").show()
+
