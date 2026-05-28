@@ -1,0 +1,21 @@
+Distributed E-Commerce Analytics using Databricks
+Upload the Diwali Sales Data.csv dataset into a Databricks notebook and load it using Spark DataFrame.
+Run the project on a Databricks cluster to understand distributed data processing.
+Display schema, count records, and check partitions using df.rdd.getNumPartitions().
+Perform transformations such as removing null values, renaming columns, and creating a new column Total_Amount.
+Convert categorical columns like Gender and State into uppercase using Spark functions.
+Apply filtering operations to identify customers with high purchase amounts.
+Perform aggregations using groupBy() and sum() to calculate total sales by state.
+Find the top-selling product categories and highest revenue-generating occupations.
+Analyze which age group contributes the most to overall sales.
+Create temporary SQL views from Spark DataFrames.
+Execute distributed Spark SQL queries on the cluster.
+Find the top 5 customers based on purchase amount using SQL queries.
+Compare Spark SQL performance with DataFrame API operations.
+Use df.explain(True) to inspect logical and physical execution plans.
+Observe DAG execution, shuffle operations, and task distribution across executors.
+Apply caching and repartitioning to improve query performance.
+Analyze Spark UI metrics such as stages, tasks, and execution time.
+Understand concepts like Driver, Worker Nodes, Executors, and Partitions.
+Optimize distributed queries for better scalability and performance.
+Generate insights from e-commerce sales data using PySpark in Databricks.
